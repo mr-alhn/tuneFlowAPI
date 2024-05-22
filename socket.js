@@ -74,6 +74,9 @@ function handleMessage(ws, message) {
     case "closeRoom":
       handleCloseRoom(ws, message);
       break;
+    case "removeUser":
+      removeUsers(message);
+      break;
   }
 }
 
@@ -82,6 +85,14 @@ function generateUniqueId() {
 }
 
 async function handleCreateRoom(ws, message) {
+  const user = users[message.clientId];
+  if (user) {
+    ws.send(
+      JSON.stringify({ type: "fail", message: "You'r already in a room" })
+    );
+    return;
+  }
+
   let roomId = generateUniqueId();
   const { clientId, name, playlist, lat, lng, city, country } = message;
 
@@ -113,6 +124,13 @@ async function handleCreateRoom(ws, message) {
 
 async function handleJoinRoom(ws, message) {
   const { roomId, clientId, name } = message;
+  const user = users[clientId];
+  if (user) {
+    ws.send(
+      JSON.stringify({ type: "fail", message: "You'r already in a room" })
+    );
+    return;
+  }
   if (!rooms[roomId]) {
     ws.send(JSON.stringify({ type: "fail", message: "Room not found" }));
     return;
@@ -293,6 +311,17 @@ function handlePlaybackState(ws, message) {
       })
     );
   });
+}
+
+function removeUsers(message) {
+  const { id } = message;
+  const user = users[id];
+  if (user) {
+    if (user) {
+      user.ws.send(JSON.stringify({ type: "removed" }));
+    }
+    delete users[id];
+  }
 }
 
 async function handleCloseRoom(ws, message) {
