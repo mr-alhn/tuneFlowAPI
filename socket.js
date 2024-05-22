@@ -330,6 +330,7 @@ async function handleCloseRoom(ws, message) {
     if (roomClients.includes(message.clientId)) {
       rooms[roomId].forEach((client) => {
         client.ws.send(JSON.stringify({ type: "roomEnded" }));
+        delete users[client.id];
       });
       delete rooms[roomId];
       delete musics[roomId];
