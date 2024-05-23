@@ -12,5 +12,6 @@ app.get("/", (req, res) => {
 
 app.use("/room", require("./controllers/rooms"));
 app.use("/playlist", require("./controllers/playlist"));
+app.use("/report", require("./controllers/report"));
 
 module.exports = app;

@@ -77,6 +77,9 @@ function handleMessage(ws, message) {
     case "removeUser":
       removeUsers(message);
       break;
+    case "getUser":
+      getActiveUsers(message);
+      break;
   }
 }
 
@@ -315,14 +318,18 @@ function handlePlaybackState(ws, message) {
   });
 }
 
-function removeUsers(message) {
-  const { id } = message;
+async function removeUsers(message) {
+  const { id, roomId } = message;
   const user = users[id];
   if (user) {
     if (user) {
       user.ws.send(JSON.stringify({ type: "removed" }));
     }
     delete users[id];
+    const room = await Room.findOne({ where: { roomId } });
+    if (room) {
+      await room.update({ usersCount: room.usersCount - 1 });
+    }
   }
 }
 
@@ -346,6 +353,16 @@ async function handleCloseRoom(ws, message) {
     if (room) {
       await room.destroy();
     }
+  }
+}
+
+async function getActiveUsers(ws) {
+  const userState = await UserState.findByPk(1);
+  if (userState) {
+    const activeUsers = userState.count;
+    ws.send(JSON.stringify({ type: "activeUsers", activeUsers }));
+  } else {
+    ws.send(JSON.stringify({ type: "activeUsers", activeUsers: 0 }));
   }
 }
 
