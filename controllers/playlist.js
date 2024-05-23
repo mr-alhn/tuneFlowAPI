@@ -4,9 +4,15 @@ const Playlist = require("../models/playlist");
 
 router.post("/create", async (req, res) => {
   try {
-    const { userId, name } = req.body;
+    const { userId, name, isMine, playlistId } = req.body;
     const image = req.body.image || "https://tuneflow.alhn.dev/logo.png";
-    const playlist = await Playlist.create({ userId, name, image });
+    const playlist = await Playlist.create({
+      userId,
+      name,
+      image,
+      isMine,
+      playlistId,
+    });
     res
       .status(201)
       .json({ status: true, message: "Playlist created", id: playlist.id });

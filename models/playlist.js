@@ -29,6 +29,14 @@ const Playlist = db.define("playlist", {
       return JSON.parse(this.getDataValue("songIds"));
     },
   },
+  isMine: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  playlistId: {
+    type: DataTypes.STRING,
+  },
 });
 
 module.exports = Playlist;
