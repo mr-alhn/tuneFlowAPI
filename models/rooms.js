@@ -19,15 +19,9 @@ const Room = db.define("rooms", {
   },
   user: {
     type: DataTypes.JSON,
-    get() {
-      return JSON.parse(this.getDataValue("user"));
-    },
   },
   room: {
     type: DataTypes.JSON,
-    get() {
-      return JSON.parse(this.getDataValue("room"));
-    },
   },
   usersCount: {
     type: DataTypes.INTEGER,

@@ -5,9 +5,9 @@ const Room = require("../models/rooms");
 router.get("/", async (req, res) => {
   try {
     const { city, country } = req.query;
-
+    const isPrivate = false;
     const rooms = await Room.findAll({
-      where: { city, country, isPrivate: false },
+      where: { city, country, isPrivate },
       order: [["usersCount", "DESC"]],
     });
 
@@ -20,8 +20,10 @@ router.get("/", async (req, res) => {
 
 router.get("/top", async (req, res) => {
   try {
+    const isPrivate = false;
+
     const rooms = await Room.findAll({
-      where: { isPrivate: false },
+      where: { isPrivate },
       order: [["usersCount", "DESC"]],
       limit: 10,
     });
