@@ -13,24 +13,18 @@ const Playlist = db.define("playlist", {
   },
   songs: {
     type: DataTypes.JSON,
-    allowNull: false,
-    defaultValue: [],
     get() {
       return JSON.parse(this.getDataValue("songs"));
     },
   },
   songIds: {
     type: DataTypes.JSON,
-    allowNull: false,
-    defaultValue: [],
     get() {
       return JSON.parse(this.getDataValue("songIds"));
     },
   },
   users: {
     type: DataTypes.JSON,
-    allowNull: false,
-    defaultValue: [],
     get() {
       return JSON.parse(this.getDataValue("songIds"));
     },
