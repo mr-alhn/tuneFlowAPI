@@ -32,6 +32,9 @@ const Room = db.define("rooms", {
   usersCount: {
     type: DataTypes.INTEGER,
   },
+  isPrivate: {
+    type: DataTypes.BOOLEAN,
+  },
 });
 
 module.exports = Room;

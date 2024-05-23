@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
     const { city, country } = req.query;
 
     const rooms = await Room.findAll({
-      where: { city, country },
+      where: { city, country, isPrivate: false },
       order: [["usersCount", "DESC"]],
     });
 
@@ -21,6 +21,7 @@ router.get("/", async (req, res) => {
 router.get("/top", async (req, res) => {
   try {
     const rooms = await Room.findAll({
+      where: { isPrivate: false },
       order: [["usersCount", "DESC"]],
       limit: 10,
     });

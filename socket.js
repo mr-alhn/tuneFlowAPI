@@ -94,7 +94,8 @@ async function handleCreateRoom(ws, message) {
   }
 
   let roomId = generateUniqueId();
-  const { clientId, name, playlist, lat, lng, city, country } = message;
+  const { clientId, name, playlist, lat, lng, city, country, isPrivate } =
+    message;
 
   while (rooms[roomId]) {
     roomId = generateUniqueId();
@@ -119,6 +120,7 @@ async function handleCreateRoom(ws, message) {
     user: users[clientId],
     room: rooms[roomId],
     usersCount: 1,
+    isPrivate,
   });
 }
 
