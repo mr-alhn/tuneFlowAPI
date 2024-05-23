@@ -105,7 +105,7 @@ async function handleCreateRoom(ws, message) {
   musics[roomId] = {
     id: clientId,
     playlist,
-    currentIndex: 0,
+    currentIndex: message.index,
     position: 0,
     isPlaying: true,
   };
