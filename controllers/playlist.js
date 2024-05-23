@@ -89,8 +89,8 @@ router.put("/add/:id", async (req, res) => {
         .json({ status: false, message: "Playlist not found" });
     }
 
-    const oldSongs = playlist.songs;
-    const oldSongsIds = playlist.songIds;
+    const oldSongs = playlist.songs || [];
+    const oldSongsIds = playlist.songIds || [];
     const newSongs = [song, ...oldSongs];
     const newSongsIds = [songId, ...oldSongsIds];
     playlist.songs = newSongs;
