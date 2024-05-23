@@ -52,6 +52,8 @@ router.put("/update/:id", async (req, res) => {
       playlist.image = image;
     }
 
+    await playlist.save();
+
     res.status(200).json({ status: true, message: "Playlist updated" });
   } catch (error) {
     console.error(error);
